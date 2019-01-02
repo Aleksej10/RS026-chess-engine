@@ -16,7 +16,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void generateBoard(QTableWidget *tw, board &b);
+    void generateBoard(board &b);
+    void resetColors();
 
 private slots:
 

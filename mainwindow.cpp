@@ -16,9 +16,20 @@
 #include "pawn.h"
 
 //board initial("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-board initial("r1bq1rk1/pp2ppbp/2np1np1/8/2BNP3/2N1BP2/PPPQ2PP/R3K2R b KQ - 4 9");
+board initial("r1bq1rk1/pp2ppbp/2np1np1/8/2BNP3/2N1BP2/PPPQ2PP/R3K2R w KQ - 4 9");
 
-void MainWindow::generateBoard(QTableWidget *tw, board &b) {
+void MainWindow::resetColors(){
+    for(int i = 0;i<8;i++) {
+        for(int j = 0;j<8;j++) {
+            if((i%2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0))
+                tw->item(i, j)->setBackgroundColor(Qt::darkGray);
+            else if((i %2 == 0 && j %2 == 0) || (i % 2 == 1 && j % 2 == 1))
+                tw->item(i, j)->setBackgroundColor(Qt::lightGray);
+        }
+    }
+}
+
+void MainWindow::generateBoard(board &b) {
     for(int i = 0;i<8;i++) {
         for(int j = 0;j<8;j++) {
             char c = b.pos[i][j];
@@ -33,12 +44,12 @@ void MainWindow::generateBoard(QTableWidget *tw, board &b) {
                 tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
             }
             else if(c == 'n'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/knight.png";
+                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/horse.png";
                 QImage *img = new QImage(imgPath);
                 tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
             }
             else if(c == 'N'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/knight1.png";
+                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/horse1.png";
                 QImage *img = new QImage(imgPath);
                 tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
             }
@@ -101,26 +112,24 @@ tw(NULL)
     tw->verticalHeader()->setDefaultSectionSize(120);
     tw->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tw->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     for(int i = 0;i<8;i++) {
         for(int j = 0;j<8;j++) {
             tw->setItem(i, j, new QTableWidgetItem());
             if((i%2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0))
-            tw->item(i, j)->setBackgroundColor(Qt::darkGray);
-
-
+                tw->item(i, j)->setBackgroundColor(Qt::darkGray);
             else if((i %2 == 0 && j %2 == 0) || (i % 2 == 1 && j % 2 == 1))
                 tw->item(i, j)->setBackgroundColor(Qt::lightGray);
-
-
         }
-}
+    }
 
 
 
 
-
-    generateBoard(tw, initial);
+    generateBoard(initial);
     connect(tw, SIGNAL( cellPressed (int, int) ), this, SLOT( cellSelected( int, int ) ) );
+
+
 }
 
 MainWindow::~MainWindow()
@@ -134,15 +143,18 @@ void MainWindow::cellSelected(int x, int y) {
 
 
     if(initial.pos[x][y] == 'r' || initial.pos[x][y] == 'R') {
+        resetColors();
+        std::vector<move1> moves;
         move1::rook(moves, initial, x, y);
-     for(move1 m : moves) {
-        std::cout << m.x1 << " " << m.y1 << std::endl;
-        tw->item(m.x1, m.y1)->setBackgroundColor(Qt::yellow);
-            }
+        for(move1 m : moves) {
+             tw->item(m.x1, m.y1)->setBackgroundColor(Qt::yellow);
+        }
     }
 
 
    else if((initial.pos[x][y] == 'n') || (initial.pos[x][y] == 'N')) {
+        resetColors();
+        std::vector<move1> moves;
           move1::knight(moves,initial, x, y);
      for(move1 m : moves) {
          std::cout << m.x1 << " " << m.y1 << std::endl;
@@ -152,6 +164,8 @@ void MainWindow::cellSelected(int x, int y) {
     }
 
   else  if(initial.pos[x][y] == 'b' || initial.pos[x][y] == 'B') {
+        resetColors();
+        std::vector<move1> moves;
          move1::bishop(moves, initial, x, y);
     for(move1 m : moves) {
         std::cout << m.x1 << " " << m.y1 << std::endl;
@@ -161,6 +175,8 @@ void MainWindow::cellSelected(int x, int y) {
 
 
    else if(initial.pos[x][y] == 'q' || initial.pos[x][y] == 'Q') {
+        resetColors();
+        std::vector<move1> moves;
           move1::queen(moves, initial, x, y);
      for(move1 m : moves) {
          std::cout << m.x1 << " " << m.y1 << std::endl;
@@ -170,6 +186,8 @@ void MainWindow::cellSelected(int x, int y) {
     }
 
    else if(initial.pos[x][y] == 'k' || initial.pos[x][y] == 'K') {
+        resetColors();
+        std::vector<move1> moves;
          move1::king(moves,initial, x, y);
     for(move1 m : moves) {
         std::cout << m.x1 << " " << m.y1 << std::endl;
@@ -179,6 +197,8 @@ void MainWindow::cellSelected(int x, int y) {
 
 
    else if(initial.pos[x][y] == 'p' || initial.pos[x][y] == 'P') {
+        resetColors();
+        std::vector<move1> moves;
           move1::pawn(moves, initial, x, y);
     for(move1 m : moves) {
          std::cout << m.x1 << " " << m.y1 << std::endl;
