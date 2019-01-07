@@ -17,11 +17,18 @@ void MainWindow::resetColors(){
     for(int i = 0;i<8;i++) {
         for(int j = 0;j<8;j++) {
             if((i%2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0))
-                tw->item(i, j)->setBackgroundColor(Qt::darkGray);
+                tw->item(i, j)->setBackgroundColor(QColor(219, 189, 169));
             else if((i %2 == 0 && j %2 == 0) || (i % 2 == 1 && j % 2 == 1))
-                tw->item(i, j)->setBackgroundColor(Qt::lightGray);
+                tw->item(i, j)->setBackgroundColor(QColor(113, 86, 67));
         }
     }
+}
+
+void MainWindow::setHighlight(int x, int y) {
+    QString imgPath = "/home/abc/Desktop/CHESS_PravaVerzija/circle.png";
+    QImage *img = new QImage(imgPath);
+    tw->item(x, y)->setData(Qt::DecorationRole, QPixmap::fromImage(*img));
+
 }
 
 void MainWindow::generateBoard(board &b) {
@@ -61,6 +68,7 @@ void MainWindow::generateBoard(board &b) {
             else if(c == 'q'){
                 QString imgPath = "/home/abc/Desktop/RS/CHESS/images/queen.png";
                 QImage *img = new QImage(imgPath);
+
                 tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
             }
             else if(c == 'Q'){
@@ -96,6 +104,10 @@ MainWindow::MainWindow(QWidget *parent)
  : QMainWindow(parent),
 tw(NULL)
 {
+    this->setWindowTitle("Chess");
+    this->setFixedSize(960, 960);
+
+
     tw = new QTableWidget(this);
     tw->setMinimumWidth(960);
     tw->setMinimumHeight(960);
@@ -111,10 +123,12 @@ tw(NULL)
     for(int i = 0;i<8;i++) {
         for(int j = 0;j<8;j++) {
             tw->setItem(i, j, new QTableWidgetItem());
+            tw->item(i, j)->setFlags(tw->item(i, j)->flags() ^ Qt::ItemIsEditable);
+
             if((i%2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0))
-                tw->item(i, j)->setBackgroundColor(Qt::darkGray);
+                tw->item(i, j)->setBackgroundColor(QColor(219, 189, 169));
             else if((i %2 == 0 && j %2 == 0) || (i % 2 == 1 && j % 2 == 1))
-                tw->item(i, j)->setBackgroundColor(Qt::lightGray);
+                tw->item(i, j)->setBackgroundColor(QColor(113, 86, 67));
         }
     }
 
@@ -142,7 +156,7 @@ void MainWindow::cellSelected(int x, int y) {
         std::vector<move1> moves;
         move1::rook(moves, initial, x, y);
         for(move1 m : moves) {
-             tw->item(m.x1, m.y1)->setBackgroundColor(Qt::yellow);
+             setHighlight(m.x1, m.y1);
         }
     }
 
@@ -153,7 +167,7 @@ void MainWindow::cellSelected(int x, int y) {
           move1::knight(moves,initial, x, y);
      for(move1 m : moves) {
          std::cout << m.x1 << " " << m.y1 << std::endl;
-         tw->item(m.x1, m.y1)->setBackgroundColor(Qt::yellow);
+         setHighlight(m.x1, m.y1);
              }
 
     }
@@ -164,7 +178,7 @@ void MainWindow::cellSelected(int x, int y) {
          move1::bishop(moves, initial, x, y);
     for(move1 m : moves) {
         std::cout << m.x1 << " " << m.y1 << std::endl;
-        tw->item(m.x1, m.y1)->setBackgroundColor(Qt::yellow);
+        setHighlight(m.x1, m.y1);
             }
     }
 
@@ -175,7 +189,7 @@ void MainWindow::cellSelected(int x, int y) {
           move1::queen(moves, initial, x, y);
      for(move1 m : moves) {
          std::cout << m.x1 << " " << m.y1 << std::endl;
-         tw->item(m.x1, m.y1)->setBackgroundColor(Qt::yellow);
+         setHighlight(m.x1, m.y1);
              }
 
     }
@@ -186,7 +200,7 @@ void MainWindow::cellSelected(int x, int y) {
          move1::king(moves,initial, x, y);
     for(move1 m : moves) {
         std::cout << m.x1 << " " << m.y1 << std::endl;
-        tw->item(m.x1, m.y1)->setBackgroundColor(Qt::yellow);
+        setHighlight(m.x1, m.y1);
             }
     }
 
@@ -197,7 +211,7 @@ void MainWindow::cellSelected(int x, int y) {
           move1::pawn(moves, initial, x, y);
     for(move1 m : moves) {
          std::cout << m.x1 << " " << m.y1 << std::endl;
-         tw->item(m.x1, m.y1)->setBackgroundColor(Qt::yellow);
+            setHighlight(m.x1, m.y1);
              }
      }
 

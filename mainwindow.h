@@ -18,6 +18,7 @@ public:
     ~MainWindow();
     void generateBoard(board &b);
     void resetColors();
+    void setHighlight(int x, int y);
 
 private slots:
 
