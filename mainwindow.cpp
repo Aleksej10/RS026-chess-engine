@@ -10,8 +10,10 @@
 #include <vector>
 
 
-//board initial("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-board initial("r1bq1rk1/pp2ppbp/2np1np1/8/2BNP3/2N1BP2/PPPQ2PP/R3K2R w KQ - 4 9");
+board initial("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+//board initial("r1bq1rk1/pp2ppbp/2np1np1/8/2BNP3/2N1BP2/PPPQ2PP/R3K2R w KQ - 4 9");
+bool Hl = false;
+std::vector<move1> moves;
 
 void MainWindow::resetColors(){
     for(int i = 0;i<8;i++) {
@@ -25,98 +27,103 @@ void MainWindow::resetColors(){
 }
 
 void MainWindow::setHighlight(int x, int y) {
-    QString imgPath = "/home/abc/Desktop/CHESS_PravaVerzija/circle.png";
-    QImage *img = new QImage(imgPath);
-    tw->item(x, y)->setData(Qt::DecorationRole, QPixmap::fromImage(*img));
-
+    //QString imgPath = "/home/aleksej/Desktop/tmp/CHESS/CHESS_PravaVerzija/circle.png";
+    //QImage *img = new QImage(imgPath);
+    //tw->item(x, y)->setData(Qt::DecorationRole, QPixmap::fromImage(*img));
+    tw->item(x, y)->setBackgroundColor(Qt::yellow);
 }
+
 
 void MainWindow::generateBoard(board &b) {
     for(int i = 0;i<8;i++) {
         for(int j = 0;j<8;j++) {
             char c = b.pos[i][j];
             if(c == 'r'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/rook.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/rook.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'R'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/rook1.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/rook1.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'n'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/horse.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/knight.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'N'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/horse1.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/knight1.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'b'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/bishop.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/bishop.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'B'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/bishop1.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/bishop1.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'q'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/queen.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/queen.svg";
                 QImage *img = new QImage(imgPath);
-
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'Q'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/queen1.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/queen1.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'k'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/king.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/king.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'K'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/king1.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/king1.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'p'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/pawn.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/pawn.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
             else if(c == 'P'){
-                QString imgPath = "/home/abc/Desktop/RS/CHESS/images/pawn1.png";
+                QString imgPath = "/home/aleksej/Desktop/svgz/pawn1.svg";
                 QImage *img = new QImage(imgPath);
-                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(120, 120));
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
+            }
+            else if(c == '_'){
+                QString imgPath = "/home/aleksej/Desktop/tmp/CHESS/CHESS_PravaVerzija/transparent.png";
+                QImage *img = new QImage(imgPath);
+                tw->item(i, j)->setData(Qt::DecorationRole, QPixmap::fromImage(*img).scaled(80, 80));
             }
         }
     }
 }
 
 MainWindow::MainWindow(QWidget *parent)
- : QMainWindow(parent),
-tw(NULL)
+    : QMainWindow(parent),
+      tw(NULL)
 {
     this->setWindowTitle("Chess");
-    this->setFixedSize(960, 960);
+    this->setFixedSize(700, 700);
 
 
     tw = new QTableWidget(this);
-    tw->setMinimumWidth(960);
-    tw->setMinimumHeight(960);
+    tw->setMinimumWidth(700);
+    tw->setMinimumHeight(700);
     tw->setRowCount(8);
     tw->setColumnCount(8);
     tw->verticalHeader()->setVisible(false);
     tw->horizontalHeader()->setVisible(false);
-    tw->horizontalHeader()->setDefaultSectionSize(120);
-    tw->verticalHeader()->setDefaultSectionSize(120);
+    tw->horizontalHeader()->setDefaultSectionSize(80);
+    tw->verticalHeader()->setDefaultSectionSize(80);
     tw->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tw->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -124,10 +131,9 @@ tw(NULL)
         for(int j = 0;j<8;j++) {
             tw->setItem(i, j, new QTableWidgetItem());
             tw->item(i, j)->setFlags(tw->item(i, j)->flags() ^ Qt::ItemIsEditable);
-
-            if((i%2 == 0 && j % 2 == 1) || (i % 2 == 1 && j % 2 == 0))
+            if((i%2 == 0 && j%2 == 1) || (i%2 == 1 && j%2 == 0))
                 tw->item(i, j)->setBackgroundColor(QColor(219, 189, 169));
-            else if((i %2 == 0 && j %2 == 0) || (i % 2 == 1 && j % 2 == 1))
+            else
                 tw->item(i, j)->setBackgroundColor(QColor(113, 86, 67));
         }
     }
@@ -136,83 +142,128 @@ tw(NULL)
 
 
     generateBoard(initial);
-    connect(tw, SIGNAL( cellPressed (int, int) ), this, SLOT( cellSelected( int, int ) ) );
 
+    connect(tw, SIGNAL(cellPressed(int, int)), this, SLOT(cellSelected(int, int)));
+//    while(!move1::isDraw(initial) && !move1::isMate(initial)){
+//        if(initial.flags[0]=='K'){
+//        }
+//        else{
+//                move1 m = move1::stupidMode(initial,3).first;
+//                move1::playMove(initial,m);
+//        }
+//    }
 
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::cellSelected(int x, int y) {
-   std::vector<move1> moves;
-  // tw->item(x, y)->setSelected(false);
-
-
-    if(initial.pos[x][y] == 'r' || initial.pos[x][y] == 'R') {
-        resetColors();
-        std::vector<move1> moves;
-        move1::rook(moves, initial, x, y);
-        for(move1 m : moves) {
-             setHighlight(m.x1, m.y1);
+void MainWindow::playSelection(int x, int y){
+    int k=0;
+    for (auto m: moves){
+        if ((m.x1 == x) && (m.y1 == y)){
+            k=1;
+            move1::playMove(initial, m);
+            resetColors();
+            generateBoard(initial);
+            break;
         }
     }
-
-
-   else if((initial.pos[x][y] == 'n') || (initial.pos[x][y] == 'N')) {
-        resetColors();
-        std::vector<move1> moves;
-          move1::knight(moves,initial, x, y);
-     for(move1 m : moves) {
-         std::cout << m.x1 << " " << m.y1 << std::endl;
-         setHighlight(m.x1, m.y1);
-             }
-
+    if(k==1){
+            move1 m = move1::stupidMode(initial,3).first;
+            move1::playMove(initial,m);
+            generateBoard(initial);
     }
+    Hl = false;
+}
 
-  else  if(initial.pos[x][y] == 'b' || initial.pos[x][y] == 'B') {
-        resetColors();
-        std::vector<move1> moves;
-         move1::bishop(moves, initial, x, y);
-    for(move1 m : moves) {
-        std::cout << m.x1 << " " << m.y1 << std::endl;
-        setHighlight(m.x1, m.y1);
+void MainWindow::cellSelected(int x, int y) {
+    if (Hl){
+        playSelection(x,y);
+    }
+    else{
+        if(initial.pos[x][y] == 'r' || initial.pos[x][y] == 'R') {
+            resetColors();
+            moves.clear();
+            move1::rook(moves, initial, x, y);
+            if(moves.empty()){
+                Hl = false;
+                return;
             }
-    }
-
-
-   else if(initial.pos[x][y] == 'q' || initial.pos[x][y] == 'Q') {
-        resetColors();
-        std::vector<move1> moves;
-          move1::queen(moves, initial, x, y);
-     for(move1 m : moves) {
-         std::cout << m.x1 << " " << m.y1 << std::endl;
-         setHighlight(m.x1, m.y1);
-             }
-
-    }
-
-   else if(initial.pos[x][y] == 'k' || initial.pos[x][y] == 'K') {
-        resetColors();
-        std::vector<move1> moves;
-         move1::king(moves,initial, x, y);
-    for(move1 m : moves) {
-        std::cout << m.x1 << " " << m.y1 << std::endl;
-        setHighlight(m.x1, m.y1);
+            for(move1 m : moves) {
+                setHighlight(m.x1, m.y1);
             }
+            Hl = true;
+        }
+        else if((initial.pos[x][y] == 'n') || (initial.pos[x][y] == 'N')) {
+            resetColors();
+            moves.clear();
+            move1::knight(moves,initial, x, y);
+            if(moves.empty()){
+                Hl = false;
+                return;
+            }
+            for(move1 m : moves) {
+                setHighlight(m.x1, m.y1);
+            }
+            Hl = true;
+        }
+        else  if(initial.pos[x][y] == 'b' || initial.pos[x][y] == 'B') {
+            resetColors();
+            moves.clear();
+            move1::bishop(moves, initial, x, y);
+            if(moves.empty()){
+                Hl = false;
+                return;
+            }
+            for(move1 m : moves) {
+                setHighlight(m.x1, m.y1);
+            }
+            Hl = true;
+        }
+        else if(initial.pos[x][y] == 'q' || initial.pos[x][y] == 'Q') {
+            resetColors();
+            moves.clear();
+            move1::queen(moves, initial, x, y);
+            if(moves.empty()){
+                Hl = false;
+                return;
+            }
+            for(move1 m : moves) {
+                setHighlight(m.x1, m.y1);
+            }
+            Hl = true;
+        }
+        else if(initial.pos[x][y] == 'k' || initial.pos[x][y] == 'K') {
+            resetColors();
+            moves.clear();
+            move1::king(moves,initial, x, y);
+            if(moves.empty()){
+                Hl = false;
+                return;
+            }
+            for(move1 m : moves) {
+                setHighlight(m.x1, m.y1);
+            }
+            Hl = true;
+        }
+        else if(initial.pos[x][y] == 'p' || initial.pos[x][y] == 'P') {
+            resetColors();
+            moves.clear();
+            move1::pawn(moves, initial, x, y);
+            if(moves.empty()){
+                Hl = false;
+                return;
+            }
+            for(move1 m : moves) {
+                setHighlight(m.x1, m.y1);
+            }
+            Hl = true;
+        }
+        else{
+            resetColors();
+            Hl = false;
+        }
     }
-
-
-   else if(initial.pos[x][y] == 'p' || initial.pos[x][y] == 'P') {
-        resetColors();
-        std::vector<move1> moves;
-          move1::pawn(moves, initial, x, y);
-    for(move1 m : moves) {
-         std::cout << m.x1 << " " << m.y1 << std::endl;
-            setHighlight(m.x1, m.y1);
-             }
-     }
-
 }

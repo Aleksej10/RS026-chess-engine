@@ -19,6 +19,7 @@ public:
     void generateBoard(board &b);
     void resetColors();
     void setHighlight(int x, int y);
+    void playSelection(int x, int y);
 
 private slots:
 
