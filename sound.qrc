@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>sound/arrow.mp3</file>
+		 
+    </qresource>
+</RCC>
